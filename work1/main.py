@@ -8,12 +8,18 @@ if list_of_names.__contains__("aristotle.txt"):
 else:
     print("нет файла \"aristotle.txt\"")
     exit()
-# открываем файл
-file = open("aristotle.txt", "r")
-# with open("aristotle.txt", "r") as file:
 
-spec_symbols = ['.', '!', '?', ':', ';', '\'', '\"', ',', '\n', '\r']  # символы, заменяемые пробелом
-spec_marks = ['.', '!', '?', ':', ';', '\'', '\"', ',']  # список знаков препинания
+# символы, заменяемые пробелом
+spec_symbols = [
+    '.', '!', '?', ':',
+    ';', '\'', '\"', ',',
+    '\n', '\r'
+]
+# список знаков препинания
+spec_marks = [
+    '.', '!', '?', ':',
+    ';', '\'', '\"', ','
+]
 symbol_num = 0
 symbol_num_no_space = 0
 symbol_num_no_marks = 0
@@ -65,27 +71,12 @@ def count_sentences_in_lines(str_line):
             continue
 
 
-# ищем конец файла
-file.seek(0, 2)    # идем в конец файла
-eof = file.tell()
-file.seek(0, 0)     # идем в начало файла
-
-
-# считываем первую строку
-line = file.readline()
-
-while file.tell() != eof:
-    # считаем всякое
-    count_something_in_line(line)
-    # считаем предложения
-    count_sentences_in_lines(line)
-    # считываем строку
-    line = file.readline()
-else:
-    # считаем всякое
-    result = count_something_in_line(line)
-    # считаем предложения
-    count_sentences_in_lines(line)
+with open("aristotle.txt", "r") as file:
+    for line in file:
+        # считаем всякое
+        result = count_something_in_line(line)
+        # считаем предложения
+        count_sentences_in_lines(line)
 
 # результат
 print("количество символов в файле: ", result[0])
